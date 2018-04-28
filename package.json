@@ -5,16 +5,20 @@
   "main": "sierpinski.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rollup src/index.js --o bundle.js --f iife",
+    "build": "webpack src/ --mode=development --o bundle.js",
+    "watch": "npm run build -- --watch",
     "lint": "prettier --write src/**"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "redux": "^4.0.0"
   },
   "devDependencies": {
     "prettier": "^1.12.1",
-    "rollup": "^0.58.2"
+    "redux-devtools-extension": "^2.13.2",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.15"
   }
 }

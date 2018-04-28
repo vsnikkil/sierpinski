@@ -1,5 +1,20 @@
 import { createCanvas, translateXY } from "./utils";
 const FULL_RAD = 2 * Math.PI;
+const body = document.querySelector("body");
+const canvas = createCanvas();
+const ctx = canvas.getContext("2d");
+
+function putText(x, y, textContent, fontSize = 1) {
+  ctx.font = `${30 * fontSize}px Arial`;
+  ctx.fillStyle = "violet";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.fillText(textContent, x, y);
+}
+
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 
 function polygonPoints(corners, xOff, yOff, r, rotation) {
   return [...new Array(corners)].map((v, idx) =>
@@ -8,9 +23,6 @@ function polygonPoints(corners, xOff, yOff, r, rotation) {
 }
 
 const drawPolygon = (() => {
-  const body = document.querySelector("body");
-  const canvas = createCanvas();
-  const ctx = canvas.getContext("2d");
   const { width, height } = body.getBoundingClientRect();
   body.appendChild(canvas);
 
@@ -31,9 +43,15 @@ const drawPolygon = (() => {
   };
 })();
 
+export const getCanvasDimensions = () => ({
+  width: canvas.width,
+  height: canvas.height,
+})
+
 export const drawTriangle = (...props) => drawPolygon(3, ...props);
 
-export default function sierpinski(x, y, r, depth) {
+export default function sierpinski(x, y, r, firstDepth, DEBUG) {
+  clearCanvas();
   drawTriangle(x, y, r, true);
 
   function inner(x, y, r, depth) {
@@ -42,6 +60,7 @@ export default function sierpinski(x, y, r, depth) {
     }
 
     drawTriangle(x, y, r);
+    DEBUG && putText(x, y, `depth := ${firstDepth - depth + 1}`, depth/firstDepth);
 
     const newPoints = [...new Array(3)]
       .map((v, idx) => translateXY(x, y, r, FULL_RAD / 3 * idx))
@@ -49,5 +68,5 @@ export default function sierpinski(x, y, r, depth) {
         inner(x, y, r / 2, depth - 1);
       });
   }
-  inner(x, y, r / 2, depth);
+  inner(x, y, r / 2, firstDepth);
 }
