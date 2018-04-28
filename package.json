@@ -1,0 +1,20 @@
+{
+  "name": "sierpinski",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sierpinski.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup src/index.js --o bundle.js --f iife",
+    "lint": "prettier --write src/**"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "prettier": "^1.12.1",
+    "rollup": "^0.58.2"
+  }
+}
