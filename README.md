@@ -1,2 +1,2 @@
-# Sierpinski's triangle
+# Sierpinski triangle
 
